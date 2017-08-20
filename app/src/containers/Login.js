@@ -5,7 +5,7 @@ import * as actions from '../actions';
 
 const handleSubmit = (e, dispatch) => {
   e.preventDefault();
-  dispatch(actions.login(e.target.username.value.trim(), e.target.password.value.trim()));
+  dispatch(actions.fetchLoginIfNeeded(e.target.username.value.trim(), e.target.password.value.trim()));
 };
 
 const LoginContainer = ({ dispatch }) => {

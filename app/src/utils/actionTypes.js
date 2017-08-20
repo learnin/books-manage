@@ -1,1 +1,2 @@
-export const LOGIN = 'LOGIN';
+export const REQUEST_LOGIN = 'REQUEST_LOGIN';
+export const RECEIVE_LOGIN = 'RECEIVE_LOGIN';
