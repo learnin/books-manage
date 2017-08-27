@@ -6,8 +6,13 @@ def hello(event, context):
         "input": event
     }
 
+    headers = {
+        "Access-Control-Allow-Origin": "*"
+    }
+
     response = {
         "statusCode": 200,
+        "headers": headers,
         "body": json.dumps(body)
     }
 
