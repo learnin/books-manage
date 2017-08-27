@@ -8,6 +8,11 @@ const handleSubmit = (e, dispatch) => {
   dispatch(actions.fetchLoginIfNeeded(e.target.username.value.trim(), e.target.password.value.trim()));
 };
 
+const handleHello = (e, dispatch) => {
+  e.preventDefault();
+  dispatch(actions.hello());
+};
+
 const LoginContainer = ({ dispatch }) => {
   return (
     <div>
@@ -15,6 +20,7 @@ const LoginContainer = ({ dispatch }) => {
         <input type="text" name="username" /><br/>
         <input type="password" name="password" /><br/>
         <input type="submit" value="ログイン" />
+        <input type="button" value="hello" onClick={(e) => handleHello(e, dispatch)} />
       </form>
     </div>
   );

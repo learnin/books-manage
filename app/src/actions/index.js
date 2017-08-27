@@ -1,5 +1,7 @@
 import * as actionTypes from '../utils/actionTypes';
 
+const API_URL = document.getElementById('REACT_APP_API_URL').value;
+
 var cognitoIdentityServiceProvider = require('amazon-cognito-identity-js');
 
 function requestLogin(username, password) {
@@ -54,7 +56,8 @@ function fetchLogin(username, password) {
           // // Instantiate aws sdk service objects now that the credentials have been updated.
           // // example: var s3 = new AWS.S3();
 
-          dispatch(receiveLogin(result.getAccessToken().getJwtToken()));
+          // dispatch(receiveLogin(result.getAccessToken().getJwtToken()));
+          dispatch(receiveLogin(result.getIdToken().getJwtToken()));
         },
 
         onFailure: function(err) {
@@ -78,9 +81,9 @@ function fetchLogin(username, password) {
 }
 
 function shouldFetchLogin(state) {
-  if (state.isLogined) {
+  if (state.authenticator.isLogined) {
     return false;
-  } else if (state.isFetching) {
+  } else if (state.authenticator.isFetching) {
     return false;
   } else {
     return true;
@@ -104,4 +107,22 @@ export function fetchLoginIfNeeded(username, password) {
       // return Promise.resolve()
     }
   }
+}
+
+function fetchHello(state) {
+  return dispatch => {
+    fetch(API_URL + 'hello', {
+      headers: new Headers({
+        'Authorization': state.authenticator.accessToken
+      })
+    }).then((response) => {
+      console.log(response);
+    });
+  }
+}
+
+export function hello() {
+  return (dispatch, getState) => {
+    return dispatch(fetchHello(getState()));
+  };
 }
