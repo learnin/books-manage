@@ -18,6 +18,6 @@ const LoginContainer = ({ dispatch }) => {
       </form>
     </div>
   );
-}
+};
 
 export default connect()(LoginContainer);

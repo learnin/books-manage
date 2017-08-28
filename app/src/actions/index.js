@@ -11,14 +11,14 @@ function requestLogin(username, password) {
     type: actionTypes.REQUEST_LOGIN,
     username,
     password
-  }
+  };
 }
 
 function receiveLogin(accessToken) {
   return {
     type: actionTypes.RECEIVE_LOGIN,
     accessToken
-  }
+  };
 }
 
 function fetchLogin(username, password) {
@@ -44,21 +44,6 @@ function fetchLogin(username, password) {
         onSuccess: function (result) {
           console.log('access token: ' + result.getAccessToken().getJwtToken());
           
-          // //POTENTIAL: Region needs to be set if not already set previously elsewhere.
-          // AWS.config.region = '<region>';
-
-          // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-          //     IdentityPoolId : '...', // your identity pool id here
-          //     Logins : {
-          //         // Change the key below according to the specific region your user pool is in.
-          //         'cognito-idp.<region>.amazonaws.com/<YOUR_USER_POOL_ID>' : result.getIdToken().getJwtToken()
-          //     }
-          // });
-
-          // // Instantiate aws sdk service objects now that the credentials have been updated.
-          // // example: var s3 = new AWS.S3();
-
-          // dispatch(receiveLogin(result.getAccessToken().getJwtToken()));
           dispatch(receiveLogin(result.getIdToken().getJwtToken()));
           dispatch(push('/hello'));
         },
@@ -80,7 +65,7 @@ function fetchLogin(username, password) {
 //            cognitoUser.completeNewPasswordChallenge(newPassword, userAttributes, this);
         }
     });
-  }
+  };
 }
 
 function shouldFetchLogin(state) {
@@ -103,13 +88,13 @@ export function fetchLoginIfNeeded(username, password) {
   return (dispatch, getState) => {
     if (shouldFetchLogin(getState())) {
       // Dispatch a thunk from thunk!
-      return dispatch(fetchLogin(username, password))
+      return dispatch(fetchLogin(username, password));
     } else {
       // Let the calling code know there's nothing to wait for.
       // FIXME:
       // return Promise.resolve()
     }
-  }
+  };
 }
 
 function fetchHello(state) {
@@ -121,7 +106,7 @@ function fetchHello(state) {
     }).then((response) => {
       console.log(response);
     });
-  }
+  };
 }
 
 export function hello() {

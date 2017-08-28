@@ -14,6 +14,6 @@ const HelloContainer = ({ dispatch }) => {
       <input type="button" value="hello" onClick={(e) => handleHello(e, dispatch)} />
     </div>
   );
-}
+};
 
 export default connect()(HelloContainer);
