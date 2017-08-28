@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux';
+
 import * as actionTypes from '../utils/actionTypes';
 
 const API_URL = document.getElementById('REACT_APP_API_URL').value;
@@ -58,6 +60,7 @@ function fetchLogin(username, password) {
 
           // dispatch(receiveLogin(result.getAccessToken().getJwtToken()));
           dispatch(receiveLogin(result.getIdToken().getJwtToken()));
+          dispatch(push('/hello'));
         },
 
         onFailure: function(err) {

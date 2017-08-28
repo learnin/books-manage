@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 
 import * as actions from '../actions';
 
@@ -16,7 +15,6 @@ const LoginContainer = ({ dispatch }) => {
         <input type="text" name="username" /><br/>
         <input type="password" name="password" /><br/>
         <input type="submit" value="ログイン" />
-        <Link to='/hello'>hello</Link>
       </form>
     </div>
   );

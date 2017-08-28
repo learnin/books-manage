@@ -4,14 +4,14 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
 import { Router, Route, browserHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
+import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux'
 import './index.css';
 import Login from './containers/Login';
 import Hello from './containers/Hello';
 import reducer from './reducers'
 import registerServiceWorker from './registerServiceWorker';
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const store = createStore(reducer, applyMiddleware(thunk, routerMiddleware(browserHistory)));
 
 const history = syncHistoryWithStore(browserHistory, store);
 
