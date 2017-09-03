@@ -2,7 +2,7 @@ import { push } from 'react-router-redux';
 
 import * as actionTypes from '../utils/actionTypes';
 
-const API_URL = document.getElementById('REACT_APP_API_URL').value;
+const API_URL = document.getElementById('REACT_APP_API_URL') &&  document.getElementById('REACT_APP_API_URL').value;
 
 var cognitoIdentityServiceProvider = require('amazon-cognito-identity-js');
 
@@ -31,8 +31,8 @@ function fetchLogin(username, password) {
     };
     var authenticationDetails = new cognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
     var poolData = {
-        UserPoolId : document.getElementById('REACT_APP_AWS_COGNITO_USER_POOL_ID').value,
-        ClientId : document.getElementById('REACT_APP_AWS_COGNITO_CLIENT_ID').value
+        UserPoolId : document.getElementById('REACT_APP_AWS_COGNITO_USER_POOL_ID') && document.getElementById('REACT_APP_AWS_COGNITO_USER_POOL_ID').value,
+        ClientId : document.getElementById('REACT_APP_AWS_COGNITO_CLIENT_ID') && document.getElementById('REACT_APP_AWS_COGNITO_CLIENT_ID').value
     };
     var userPool = new cognitoIdentityServiceProvider.CognitoUserPool(poolData);
     var userData = {
@@ -42,7 +42,7 @@ function fetchLogin(username, password) {
     var cognitoUser = new cognitoIdentityServiceProvider.CognitoUser(userData);
     cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
-          console.log('access token: ' + result.getAccessToken().getJwtToken());
+          console.log('access token: ' + result.getIdToken().getJwtToken());
           
           dispatch(receiveLogin(result.getIdToken().getJwtToken()));
           dispatch(push('/hello'));

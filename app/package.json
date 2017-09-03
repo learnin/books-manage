@@ -18,5 +18,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "nock": "^9.0.14",
+    "redux-mock-store": "^1.2.3"
   }
 }
