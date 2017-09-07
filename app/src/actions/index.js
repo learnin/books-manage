@@ -21,6 +21,13 @@ function receiveLogin(accessToken) {
   };
 }
 
+function fetchLoginFailure(error) {
+  return {
+    type: actionTypes.FETCH_LOGIN_FAILURE,
+    error
+  };
+}
+
 function fetchLogin(username, password) {
   return dispatch => {
     dispatch(requestLogin(username, password));
@@ -50,6 +57,7 @@ function fetchLogin(username, password) {
 
         onFailure: function(err) {
           console.log(err);
+          dispatch(fetchLoginFailure(err));
         },
 
         newPasswordRequired: function(userAttributes, requiredAttributes) {
