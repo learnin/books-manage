@@ -4,19 +4,19 @@ import * as actionTypes from '../utils/actionTypes';
 
 const API_URL = document.getElementById('REACT_APP_API_URL') &&  document.getElementById('REACT_APP_API_URL').value;
 
-var cognitoIdentityServiceProvider = require('amazon-cognito-identity-js');
+const cognitoIdentityServiceProvider = require('amazon-cognito-identity-js');
 
-function requestLogin(username, password) {
+function fetchLoginRequest(username, password) {
   return {
-    type: actionTypes.REQUEST_LOGIN,
+    type: actionTypes.FETCH_LOGIN_REQUEST,
     username,
     password
   };
 }
 
-function receiveLogin(accessToken) {
+function fetchLoginSuccess(accessToken) {
   return {
-    type: actionTypes.RECEIVE_LOGIN,
+    type: actionTypes.FETCH_LOGIN_SUCCESS,
     accessToken
   };
 }
@@ -30,28 +30,28 @@ function fetchLoginFailure(error) {
 
 function fetchLogin(username, password) {
   return dispatch => {
-    dispatch(requestLogin(username, password));
+    dispatch(fetchLoginRequest(username, password));
 
-    var authenticationData = {
+    const authenticationData = {
         Username : username,
         Password : password
     };
-    var authenticationDetails = new cognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
-    var poolData = {
+    const authenticationDetails = new cognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
+    const poolData = {
         UserPoolId : document.getElementById('REACT_APP_AWS_COGNITO_USER_POOL_ID') && document.getElementById('REACT_APP_AWS_COGNITO_USER_POOL_ID').value,
         ClientId : document.getElementById('REACT_APP_AWS_COGNITO_CLIENT_ID') && document.getElementById('REACT_APP_AWS_COGNITO_CLIENT_ID').value
     };
-    var userPool = new cognitoIdentityServiceProvider.CognitoUserPool(poolData);
-    var userData = {
+    const userPool = new cognitoIdentityServiceProvider.CognitoUserPool(poolData);
+    const userData = {
         Username : authenticationData.Username,
         Pool : userPool
     };
-    var cognitoUser = new cognitoIdentityServiceProvider.CognitoUser(userData);
+    const cognitoUser = new cognitoIdentityServiceProvider.CognitoUser(userData);
     cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
           console.log('access token: ' + result.getIdToken().getJwtToken());
           
-          dispatch(receiveLogin(result.getIdToken().getJwtToken()));
+          dispatch(fetchLoginSuccess(result.getIdToken().getJwtToken()));
           dispatch(push('/hello'));
         },
 

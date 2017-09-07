@@ -15,14 +15,13 @@ describe('requestLogin', () => {
   it('creates RECEIVE_LOGIN when input correct account', () => {
     const username = cognitoIdentityServiceProvider.__test__correctUserAccount.username;
     const password = cognitoIdentityServiceProvider.__test__correctUserAccount.password;
-    const accessToken = cognitoIdentityServiceProvider.__test__correctUserAccount.accessToken;
     const expectedActions = [{
-      type: actionTypes.REQUEST_LOGIN,
+      type: actionTypes.FETCH_LOGIN_REQUEST,
       username,
       password
     }, {
-      type: actionTypes.RECEIVE_LOGIN,
-      accessToken
+      type: actionTypes.FETCH_LOGIN_SUCCESS,
+      accessToken: cognitoIdentityServiceProvider.__test__correctUserAccount.accessToken
     }, {
       type: '@@router/CALL_HISTORY_METHOD',
       payload: {
@@ -46,7 +45,7 @@ describe('requestLogin', () => {
     const username = cognitoIdentityServiceProvider.__test__correctUserAccount.username;
     const password = 'wrong_password';
     const expectedActions = [{
-      type: actionTypes.REQUEST_LOGIN,
+      type: actionTypes.FETCH_LOGIN_REQUEST,
       username,
       password
     }, {

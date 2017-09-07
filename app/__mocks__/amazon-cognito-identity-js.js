@@ -18,7 +18,7 @@ const __test__correctUserAccount = {
   username: 'correct_username',
   password: 'correct_password',
   accessToken: 'correct_accessToken'
-}
+};
 const __test__errorOnAuthenticate = {error: 'username or password is wrong.'};
 
 class CognitoUser {
