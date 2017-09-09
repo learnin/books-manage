@@ -7,12 +7,12 @@ const initialLoginState = {
 };
 
 const authenticator = (state = initialLoginState, action) => {
-  if (action.type === actionTypes.REQUEST_LOGIN) {
+  if (action.type === actionTypes.FETCH_LOGIN_REQUEST) {
     return {
       ...state,
       isFetching: true
     };
-  } else if (action.type === actionTypes.RECEIVE_LOGIN) {
+  } else if (action.type === actionTypes.FETCH_LOGIN_SUCCESS) {
     return {
       ...state,
       accessToken: action.accessToken,
