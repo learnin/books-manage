@@ -8,27 +8,28 @@ const initialLoginState = {
 };
 
 const authenticator = (state = initialLoginState, action) => {
-  if (action.type === actionTypes.FETCH_LOGIN_REQUEST) {
-    return {
-      ...state,
-      isFetching: true
-    };
-  } else if (action.type === actionTypes.FETCH_LOGIN_SUCCESS) {
-    return {
-      ...state,
-      accessToken: action.accessToken,
-      isFetching: false,
-      isLogined: true,
-      message: ''
-    };
-  } else if (action.type === actionTypes.FETCH_LOGIN_FAILURE) {
-    return {
-      ...state,
-      isFetching: false,
-      message: action.error.message
-    };
-  } else {
-    return state;
+  switch (action.type) {
+    case actionTypes.FETCH_LOGIN_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case actionTypes.FETCH_LOGIN_SUCCESS:
+      return {
+        ...state,
+        accessToken: action.accessToken,
+        isFetching: false,
+        isLogined: true,
+        message: ''
+      };
+    case actionTypes.FETCH_LOGIN_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        message: action.error.message
+      };
+    default:
+      return state;
   }
 };
 
