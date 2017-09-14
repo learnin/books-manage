@@ -3,7 +3,8 @@ import * as actionTypes from '../utils/actionTypes';
 const initialLoginState = {
   accessToken: '',
   isFetching: false,
-  isLogined: false
+  isLogined: false,
+  message: ''
 };
 
 const authenticator = (state = initialLoginState, action) => {
@@ -17,7 +18,14 @@ const authenticator = (state = initialLoginState, action) => {
       ...state,
       accessToken: action.accessToken,
       isFetching: false,
-      isLogined: true
+      isLogined: true,
+      message: ''
+    };
+  } else if (action.type === actionTypes.FETCH_LOGIN_FAILURE) {
+    return {
+      ...state,
+      isFetching: false,
+      message: action.error.message
     };
   } else {
     return state;

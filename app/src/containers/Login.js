@@ -12,12 +12,13 @@ class LoginContainer extends React.Component {
   };
 
   render() {
-    const { actions } = this.props;
+    const { actions, message } = this.props;
 
     return (
       <div>
-        <input type="text" ref="username" id="username" /><br/>
-        <input type="password" ref="password" id="password" /><br/>
+        {message}<br/>
+        <input type="text" ref="username" name="username" /><br/>
+        <input type="password" ref="password" name="password" /><br/>
         <button onClick={() => actions.fetchLoginIfNeeded(
           ReactDOM.findDOMNode(this.refs.username).value.trim(),
           ReactDOM.findDOMNode(this.refs.password).value.trim()
@@ -32,7 +33,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  isLogined: state.authenticator.isLogined
+  isLogined: state.authenticator.isLogined,
+  message: state.authenticator.message
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
