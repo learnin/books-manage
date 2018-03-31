@@ -10,6 +10,14 @@ const cognitoIdentityServiceProvider = require('amazon-cognito-identity-js');
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+const createMockStore = () => mockStore({
+  authenticator: {
+    accessToken: '',
+    isFetching: false,
+    isLogined: false,
+    message: ''
+  }
+});
 
 describe('requestLogin', () => {
   it('creates RECEIVE_LOGIN when input correct account', () => {
@@ -29,13 +37,7 @@ describe('requestLogin', () => {
         method: 'push'
       }
     }];
-    const store = mockStore({
-      authenticator: {
-        accessToken: '',
-        isFetching: false,
-        isLogined: false
-      }
-    });
+    const store = createMockStore();
 
     store.dispatch(actions.fetchLoginIfNeeded(username, password));
     expect(store.getActions()).toEqual(expectedActions);
@@ -52,13 +54,7 @@ describe('requestLogin', () => {
       type: actionTypes.FETCH_LOGIN_FAILURE,
       error: cognitoIdentityServiceProvider.__test__errorOnAuthenticate
     }];
-    const store = mockStore({
-      authenticator: {
-        accessToken: '',
-        isFetching: false,
-        isLogined: false
-      }
-    });
+    const store = createMockStore();
 
     store.dispatch(actions.fetchLoginIfNeeded(username, password));
     expect(store.getActions()).toEqual(expectedActions);

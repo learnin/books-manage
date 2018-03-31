@@ -3,24 +3,33 @@ import * as actionTypes from '../utils/actionTypes';
 const initialLoginState = {
   accessToken: '',
   isFetching: false,
-  isLogined: false
+  isLogined: false,
+  message: ''
 };
 
 const authenticator = (state = initialLoginState, action) => {
-  if (action.type === actionTypes.FETCH_LOGIN_REQUEST) {
-    return {
-      ...state,
-      isFetching: true
-    };
-  } else if (action.type === actionTypes.FETCH_LOGIN_SUCCESS) {
-    return {
-      ...state,
-      accessToken: action.accessToken,
-      isFetching: false,
-      isLogined: true
-    };
-  } else {
-    return state;
+  switch (action.type) {
+    case actionTypes.FETCH_LOGIN_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case actionTypes.FETCH_LOGIN_SUCCESS:
+      return {
+        ...state,
+        accessToken: action.accessToken,
+        isFetching: false,
+        isLogined: true,
+        message: ''
+      };
+    case actionTypes.FETCH_LOGIN_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        message: action.error.message
+      };
+    default:
+      return state;
   }
 };
 
