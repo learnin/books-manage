@@ -20,6 +20,22 @@ service: aws-api
 provider:
   name: aws
   runtime: python3.6
+  environment:
+    DYNAMODB_TABLE_BOOKS: ${self:service}-Books-${opt:stage, self:provider.stage}
+    DYNAMODB_TABLE_USERS_BOOKS: ${self:service}-UsersBooks-${opt:stage, self:provider.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:BatchGetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_BOOKS}"
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_USERS_BOOKS}"
 
 # you can overwrite defaults here
 #  stage: dev
@@ -108,3 +124,63 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
+resources:
+  Resources:
+    BooksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: BookId
+            AttributeType: S
+          - AttributeName: Isbn
+            AttributeType: S
+          - AttributeName: Name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: BookId
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: IsbnNameGSI
+            KeySchema:
+              - AttributeName: Isbn
+                KeyType: HASH
+              - AttributeName: Name
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DYNAMODB_TABLE_BOOKS}
+    UsersBooksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: UserId
+            AttributeType: S
+          - AttributeName: BookId
+            AttributeType: S
+          - AttributeName: CreateDateTime
+            AttributeType: S
+        KeySchema:
+          - AttributeName: UserId
+            KeyType: HASH
+          - AttributeName: BookId
+            KeyType: RANGE
+        LocalSecondaryIndexes:
+          - IndexName: UserIdCreateDateTimeLSI
+            KeySchema:
+              - AttributeName: UserId
+                KeyType: HASH
+              - AttributeName: CreateDateTime
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DYNAMODB_TABLE_USERS_BOOKS}
