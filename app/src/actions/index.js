@@ -122,3 +122,46 @@ export function hello() {
     return dispatch(fetchHello(getState()));
   };
 }
+
+function doCreateBook(state) {
+  return dispatch => {
+    fetch(API_URL + 'books', {
+      method: 'POST',
+      headers: {
+        'Authorization': state.authenticator.accessToken,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        isbn: '9784274217883',
+        name: 'テスト駆動開発',
+        author: 'Kent Beck 著／和田 卓人　訳'
+      })
+    }).then((response)=> response.json())
+    .then(console.log)
+    .catch(console.error);
+  };
+}
+
+export function createBook() {
+  return (dispatch, getState) => {
+    return dispatch(doCreateBook(getState()));
+  };
+}
+
+function fetchBooks(state) {
+  return dispatch => {
+    fetch(API_URL + 'books', {
+      headers: {
+        'Authorization': state.authenticator.accessToken
+      }
+    }).then((response)=> response.json())
+    .then(console.log)
+    .catch(console.error);
+  };
+}
+
+export function listBooks() {
+  return (dispatch, getState) => {
+    return dispatch(fetchBooks(getState()));
+  };
+}

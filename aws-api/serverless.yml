@@ -80,6 +80,24 @@ functions:
           authorizer:
             arn: ${env:COGNITO_USER_POOL_ARN}
           cors: true
+  createBook:
+    handler: books.create
+    events:
+      - http:
+          path: books
+          method: post
+          authorizer:
+            arn: ${env:COGNITO_USER_POOL_ARN}
+          cors: true
+  listBooks:
+    handler: books.list
+    events:
+      - http:
+          path: books
+          method: get
+          authorizer:
+            arn: ${env:COGNITO_USER_POOL_ARN}
+          cors: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
