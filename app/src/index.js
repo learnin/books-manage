@@ -8,6 +8,7 @@ import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux';
 import './index.css';
 import Login from './containers/Login';
 import Hello from './containers/Hello';
+import Books from './containers/Books';
 import reducer from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -20,6 +21,7 @@ ReactDOM.render(
     <Router history={history}>
       <Route path="/" component={Login} />
       <Route path="/hello" component={Hello} />
+      <Route path="books" component={Books} />
     </Router>
   </Provider>,
   document.getElementById('root')
