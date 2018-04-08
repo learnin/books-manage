@@ -2,9 +2,9 @@ import { push } from 'react-router-redux';
 
 import * as actionTypes from '../utils/actionTypes';
 
-const API_URL = document.getElementById('REACT_APP_API_URL') &&  document.getElementById('REACT_APP_API_URL').value;
+import * as apiClient from '../apiClient';
 
-const cognitoIdentityServiceProvider = require('amazon-cognito-identity-js');
+// const API_URL = document.getElementById('REACT_APP_API_URL') &&  document.getElementById('REACT_APP_API_URL').value;
 
 function fetchLoginRequest(username, password) {
   return {
@@ -32,22 +32,7 @@ function fetchLogin(username, password) {
   return dispatch => {
     dispatch(fetchLoginRequest(username, password));
 
-    const authenticationData = {
-        Username : username,
-        Password : password
-    };
-    const authenticationDetails = new cognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
-    const poolData = {
-        UserPoolId : document.getElementById('REACT_APP_AWS_COGNITO_USER_POOL_ID') && document.getElementById('REACT_APP_AWS_COGNITO_USER_POOL_ID').value,
-        ClientId : document.getElementById('REACT_APP_AWS_COGNITO_CLIENT_ID') && document.getElementById('REACT_APP_AWS_COGNITO_CLIENT_ID').value
-    };
-    const userPool = new cognitoIdentityServiceProvider.CognitoUserPool(poolData);
-    const userData = {
-        Username : authenticationData.Username,
-        Pool : userPool
-    };
-    const cognitoUser = new cognitoIdentityServiceProvider.CognitoUser(userData);
-    cognitoUser.authenticateUser(authenticationDetails, {
+    apiClient.authenticateUser(username, password, {
         onSuccess: function (result) {
           console.log('access token: ' + result.getIdToken().getJwtToken());
           
@@ -55,9 +40,9 @@ function fetchLogin(username, password) {
           dispatch(push('/hello'));
         },
 
-        onFailure: function(err) {
-          console.log(err);
-          dispatch(fetchLoginFailure(err));
+        onFailure: function(error) {
+          console.log(error);
+          dispatch(fetchLoginFailure(error));
         },
 
         newPasswordRequired: function(userAttributes, requiredAttributes) {
@@ -102,23 +87,5 @@ export function fetchLoginIfNeeded(username, password) {
       // FIXME:
       // return Promise.resolve()
     }
-  };
-}
-
-function fetchHello(state) {
-  return dispatch => {
-    fetch(API_URL + 'hello', {
-      headers: new Headers({
-        'Authorization': state.authenticator.accessToken
-      })
-    }).then(response => {
-      console.log(response);
-    });
-  };
-}
-
-export function hello() {
-  return (dispatch, getState) => {
-    return dispatch(fetchHello(getState()));
   };
 }

@@ -4,11 +4,6 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import * as booksActions from '../actions/books'
 
-const handleHello = (e, dispatch) => {
-  e.preventDefault();
-  dispatch(actions.hello());
-};
-
 const handleListBooks = (e, dispatch) => {
   e.preventDefault();
   dispatch(booksActions.listBooks());
@@ -22,7 +17,6 @@ const handleListMyBooks = (e, dispatch) => {
 const HelloContainer = ({ dispatch }) => {
   return (
     <div>
-      <input type="button" value="hello" onClick={(e) => handleHello(e, dispatch)} />
       <input type="button" value="listBooks" onClick={(e) => handleListBooks(e, dispatch)} />
       <input type="button" value="listMyBooks" onClick={(e) => handleListMyBooks(e, dispatch)} />
     </div>

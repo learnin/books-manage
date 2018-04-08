@@ -2,7 +2,9 @@ import { push } from 'react-router-redux';
 
 import * as actionTypes from '../utils/actionTypes';
 
-const API_URL = document.getElementById('REACT_APP_API_URL') &&  document.getElementById('REACT_APP_API_URL').value;
+import * as apiClient from '../apiClient';
+
+// const API_URL = document.getElementById('REACT_APP_API_URL') &&  document.getElementById('REACT_APP_API_URL').value;
 
 function fetchBooksRequest() {
   return {
@@ -24,74 +26,49 @@ function fetchBooksFailure(error) {
   };
 }
 
-// FIXME 仮実装
-function doCreateBook(state) {
-  return dispatch => {
-    fetch(API_URL + 'books', {
-      method: 'POST',
-      headers: {
-        'Authorization': state.authenticator.accessToken,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        isbn: '9784274217883',
-        name: 'テスト駆動開発',
-        author: 'Kent Beck 著／和田 卓人　訳'
-      })
-    }).then(response => response.json())
-    .then(console.log)
-    .catch(console.error);
-  };
-}
-
 export function createBook() {
   return (dispatch, getState) => {
-    return dispatch(doCreateBook(getState()));
-  };
-}
-
-function fetchBooks(state) {
-  return dispatch => {
-    dispatch(fetchBooksRequest());
-
-    fetch(API_URL + 'books', {
-      headers: {
-        'Authorization': state.authenticator.accessToken
-      }
-    })
-    .then(response => response.json())
-    .then(books => {
-      console.log(books);
-      dispatch(fetchBooksSuccess(books));
-      dispatch(push('/books'));
-    })
-    .catch(err => {
-      console.error(err);
-      dispatch(fetchBooksFailure(err));
-    });
+    apiClient.createBook(getState().authenticator.accessToken)
+      .then(res => {
+        const { payload, error } = res;
+        if (payload && !error) {
+          console.log(payload);
+        } else {
+          console.error(error);
+        }
+      });
   };
 }
 
 export function listBooks() {
   return (dispatch, getState) => {
-    return dispatch(fetchBooks(getState()));
-  };
-}
+    dispatch(fetchBooksRequest());
 
-function fetchMyBooks(state) {
-  return dispatch => {
-    fetch(API_URL + 'my/books', {
-      headers: {
-        'Authorization': state.authenticator.accessToken
-      }
-    }).then(response => response.json())
-    .then(console.log)
-    .catch(console.error);
+    apiClient.fetchBooks(getState().authenticator.accessToken)
+      .then(res => {
+        const { payload, error } = res;
+        if (payload && !error) {
+          console.log(payload);
+          dispatch(fetchBooksSuccess(payload));
+          dispatch(push('/books'));
+        } else {
+          console.error(error);
+          dispatch(fetchBooksFailure(error));
+        }
+      });
   };
 }
 
 export function listMyBooks() {
   return (dispatch, getState) => {
-    return dispatch(fetchMyBooks(getState()));
+    apiClient.fetchMyBooks(getState().authenticator.accessToken)
+    .then(res => {
+      const { payload, error } = res;
+      if (payload && !error) {
+        console.log(payload);
+      } else {
+        console.error(error);
+      }
+    });
   };
 }
