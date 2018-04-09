@@ -37,8 +37,8 @@ export function createBook(accessToken) {
   })
   // FIXME res.okを見る
   .then(res => res.json())
-  .then(payload => {return {payload};})
-  .catch(error => {return {error};});
+  .then(payload => ({payload}))
+  .catch(error => ({error}));
 }
 
 export function fetchBooks(accessToken) {
@@ -49,8 +49,8 @@ export function fetchBooks(accessToken) {
   })
   // FIXME res.okを見る
   .then(res => res.json())
-  .then(payload => {return {payload};})
-  .catch(error => {return {error};});
+  .then(payload => ({payload}))
+  .catch(error => ({error}));
 }
 
 export function fetchMyBooks(accessToken) {
@@ -61,6 +61,6 @@ export function fetchMyBooks(accessToken) {
   })
   // FIXME res.okを見る
   .then(res => res.json())
-  .then(payload => {return {payload};})
-  .catch(error => {return {error};});
+  .then(payload => ({payload}))
+  .catch(error => ({error}));
 }
