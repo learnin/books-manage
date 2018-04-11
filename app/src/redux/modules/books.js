@@ -1,34 +1,61 @@
 import { push } from 'react-router-redux';
+import * as apiClient from '../../apiClient';
 
-import * as actionTypes from '../utils/actionTypes';
+export const FETCH_BOOKS_REQUEST = 'FETCH_BOOKS_REQUEST';
+export const FETCH_BOOKS_SUCCESS = 'FETCH_BOOKS_SUCCESS';
+export const FETCH_BOOKS_FAILURE = 'FETCH_BOOKS_FAILURE';
 
-import * as apiClient from '../apiClient';
+const initialState = {
+  isFetching: false
+};
 
-// const API_URL = document.getElementById('REACT_APP_API_URL') &&  document.getElementById('REACT_APP_API_URL').value;
+export default function reducer(state = initialState, action = {}) {
+  switch (action.type) {
+    case FETCH_BOOKS_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case FETCH_BOOKS_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        books: action.books
+      };
+    case FETCH_BOOKS_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        message: action.error.message
+      };
+    default:
+      return state;
+  }
+}
 
 function fetchBooksRequest() {
   return {
-    type: actionTypes.FETCH_BOOKS_REQUEST
+    type: FETCH_BOOKS_REQUEST
   };
 }
 
 function fetchBooksSuccess(books) {
   return {
-    type: actionTypes.FETCH_BOOKS_SUCCESS,
+    type: FETCH_BOOKS_SUCCESS,
     books
   };
 }
 
 function fetchBooksFailure(error) {
   return {
-    type: actionTypes.FETCH_BOOKS_FAILURE,
+    type: FETCH_BOOKS_FAILURE,
     error
   };
 }
 
 export function createBook() {
   return (dispatch, getState) => {
-    apiClient.createBook(getState().authenticator.accessToken)
+    apiClient.createBook(getState().authenticate.accessToken)
       .then(res => {
         const { payload, error } = res;
         if (payload && !error) {
@@ -44,7 +71,7 @@ export function listBooks() {
   return (dispatch, getState) => {
     dispatch(fetchBooksRequest());
 
-    apiClient.fetchBooks(getState().authenticator.accessToken)
+    apiClient.fetchBooks(getState().authenticate.accessToken)
       .then(res => {
         const { payload, error } = res;
         if (payload && !error) {
@@ -61,7 +88,7 @@ export function listBooks() {
 
 export function listMyBooks() {
   return (dispatch, getState) => {
-    apiClient.fetchMyBooks(getState().authenticator.accessToken)
+    apiClient.fetchMyBooks(getState().authenticate.accessToken)
     .then(res => {
       const { payload, error } = res;
       if (payload && !error) {

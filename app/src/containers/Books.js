@@ -2,11 +2,11 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from '../actions/books';
+import * as booksActions from '../redux/modules/books';
 
 class BooksContainer extends React.Component {
   render() {
-    const { books } = this.props;
+    const { actions, books } = this.props;
 
     return (
       <div>
@@ -24,7 +24,7 @@ class BooksContainer extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(actions, dispatch)
+  actions: bindActionCreators(booksActions, dispatch)
 });
 
 const mapStateToProps = state => ({

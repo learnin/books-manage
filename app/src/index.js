@@ -9,7 +9,7 @@ import './index.css';
 import Login from './containers/Login';
 import Hello from './containers/Hello';
 import Books from './containers/Books';
-import reducer from './reducers';
+import reducer from './redux/modules/reducer';
 import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(reducer, applyMiddleware(thunk, routerMiddleware(browserHistory)));

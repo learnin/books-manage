@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as Actions from '../actions';
+import * as authenticateActions from '../redux/modules/authenticate';
 
 class LoginContainer extends React.Component {
   static propTypes = {
@@ -29,12 +29,12 @@ class LoginContainer extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(Actions, dispatch)
+  actions: bindActionCreators(authenticateActions, dispatch)
 });
 
 const mapStateToProps = state => ({
-  isLogined: state.authenticator.isLogined,
-  message: state.authenticator.message
+  isLogined: state.authenticate.isLogined,
+  message: state.authenticate.message
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
