@@ -1,9 +1,9 @@
 import { push } from 'react-router-redux';
 import * as apiClient from '../../apiClient';
 
-export const FETCH_LOGIN_REQUEST = 'FETCH_LOGIN_REQUEST';
-export const FETCH_LOGIN_SUCCESS = 'FETCH_LOGIN_SUCCESS';
-export const FETCH_LOGIN_FAILURE = 'FETCH_LOGIN_FAILURE';
+export const LOGIN_REQUEST = 'books-manage/authenticate/LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'books-manage/authenticate/LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'books-manage/authenticate/LOGIN_FAILURE';
 
 const initialState = {
   accessToken: '',
@@ -14,12 +14,12 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case FETCH_LOGIN_REQUEST:
+    case LOGIN_REQUEST:
       return {
         ...state,
         isFetching: true
       };
-    case FETCH_LOGIN_SUCCESS:
+    case LOGIN_SUCCESS:
       return {
         ...state,
         accessToken: action.accessToken,
@@ -27,7 +27,7 @@ export default function reducer(state = initialState, action = {}) {
         isLogined: true,
         message: ''
       };
-    case FETCH_LOGIN_FAILURE:
+    case LOGIN_FAILURE:
       return {
         ...state,
         isFetching: false,
@@ -40,7 +40,7 @@ export default function reducer(state = initialState, action = {}) {
 
 function fetchLoginRequest(username, password) {
   return {
-    type: FETCH_LOGIN_REQUEST,
+    type: LOGIN_REQUEST,
     username,
     password
   };
@@ -48,14 +48,14 @@ function fetchLoginRequest(username, password) {
 
 function fetchLoginSuccess(accessToken) {
   return {
-    type: FETCH_LOGIN_SUCCESS,
+    type: LOGIN_SUCCESS,
     accessToken
   };
 }
 
 function fetchLoginFailure(error) {
   return {
-    type: FETCH_LOGIN_FAILURE,
+    type: LOGIN_FAILURE,
     error
   };
 }

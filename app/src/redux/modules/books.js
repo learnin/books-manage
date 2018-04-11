@@ -1,9 +1,9 @@
 import { push } from 'react-router-redux';
 import * as apiClient from '../../apiClient';
 
-export const FETCH_BOOKS_REQUEST = 'FETCH_BOOKS_REQUEST';
-export const FETCH_BOOKS_SUCCESS = 'FETCH_BOOKS_SUCCESS';
-export const FETCH_BOOKS_FAILURE = 'FETCH_BOOKS_FAILURE';
+export const LOAD_REQUEST = 'books-manage/books/LOAD_REQUEST';
+export const LOAD_SUCCESS = 'books-manage/books/LOAD_SUCCESS';
+export const LOAD_FAILURE = 'books-manage/books/LOAD_FAILURE';
 
 const initialState = {
   isFetching: false
@@ -11,18 +11,18 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case FETCH_BOOKS_REQUEST:
+    case LOAD_REQUEST:
       return {
         ...state,
         isFetching: true
       };
-    case FETCH_BOOKS_SUCCESS:
+    case LOAD_SUCCESS:
       return {
         ...state,
         isFetching: false,
         books: action.books
       };
-    case FETCH_BOOKS_FAILURE:
+    case LOAD_FAILURE:
       return {
         ...state,
         isFetching: false,
@@ -35,20 +35,20 @@ export default function reducer(state = initialState, action = {}) {
 
 function fetchBooksRequest() {
   return {
-    type: FETCH_BOOKS_REQUEST
+    type: LOAD_REQUEST
   };
 }
 
 function fetchBooksSuccess(books) {
   return {
-    type: FETCH_BOOKS_SUCCESS,
+    type: LOAD_SUCCESS,
     books
   };
 }
 
 function fetchBooksFailure(error) {
   return {
-    type: FETCH_BOOKS_FAILURE,
+    type: LOAD_FAILURE,
     error
   };
 }
