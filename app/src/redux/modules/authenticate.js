@@ -22,7 +22,7 @@ export default function reducer(state = initialState, action = {}) {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        accessToken: action.accessToken,
+        accessToken: action.payload.accessToken,
         isFetching: false,
         isLogined: true,
         message: ''
@@ -31,7 +31,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         isFetching: false,
-        message: action.error.message
+        message: action.payload.message
       };
     default:
       return state;
@@ -41,22 +41,29 @@ export default function reducer(state = initialState, action = {}) {
 function fetchLoginRequest(username, password) {
   return {
     type: LOGIN_REQUEST,
-    username,
-    password
+    payload: {
+      username,
+      password
+    }
   };
 }
 
 function fetchLoginSuccess(accessToken) {
   return {
     type: LOGIN_SUCCESS,
-    accessToken
+    payload: {
+      accessToken
+    }
   };
 }
 
-function fetchLoginFailure(error) {
+function fetchLoginFailure(message) {
   return {
     type: LOGIN_FAILURE,
-    error
+    payload: {
+      message
+    },
+    error: true
   };
 }
 
@@ -74,7 +81,7 @@ function fetchLogin(username, password) {
 
       onFailure: function (error) {
         console.log(error);
-        dispatch(fetchLoginFailure(error));
+        dispatch(fetchLoginFailure(error.message));
       },
 
       newPasswordRequired: function (userAttributes, requiredAttributes) {

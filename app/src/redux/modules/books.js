@@ -20,13 +20,13 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         isFetching: false,
-        books: action.books
+        books: action.payload.books
       };
     case LOAD_FAILURE:
       return {
         ...state,
         isFetching: false,
-        message: action.error.message
+        message: action.payload.message
       };
     default:
       return state;
@@ -42,14 +42,19 @@ function fetchBooksRequest() {
 function fetchBooksSuccess(books) {
   return {
     type: LOAD_SUCCESS,
-    books
+    payload: {
+      books
+    }
   };
 }
 
-function fetchBooksFailure(error) {
+function fetchBooksFailure(message) {
   return {
     type: LOAD_FAILURE,
-    error
+    payload: {
+      message
+    },
+    error: true
   };
 }
 
@@ -80,7 +85,7 @@ export function listBooks() {
           dispatch(push('/books'));
         } else {
           console.error(error);
-          dispatch(fetchBooksFailure(error));
+          dispatch(fetchBooksFailure(error.message));
         }
       });
   };
