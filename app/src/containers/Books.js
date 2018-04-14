@@ -1,34 +1,38 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as booksActions from '../redux/modules/books';
 
-class BooksContainer extends React.Component {
-  render() {
-    const { actions, books } = this.props;
+const BooksContainer = ({ actions, books }) => (
+  <div>
+    {
+      books.map((book) => {
+        return (
+          <div key={book.BookId}>{book.Name}</div>
+        );
+      })
+    }
+    <input type="button" value="createBook" onClick={actions.createBook} />
+  </div>
+);
 
-    return (
-      <div>
-        {
-          books.map((book) => {
-            return (
-              <div key={book.BookId}>{book.Name}</div>
-            );
-          })
-        }
-        <input type="button" value="createBook" onClick={() => actions.createBook()} />
-      </div>
-    );
-  }
-}
-
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(booksActions, dispatch)
-});
+BooksContainer.propTypes = {
+  actions: PropTypes.object.isRequired,
+  books: PropTypes.arrayOf(
+    PropTypes.shape({
+      BookId: PropTypes.string.isRequired,
+      Name: PropTypes.string.isRequired
+    })).isRequired
+};
 
 const mapStateToProps = state => ({
   books: state.books.books
+});
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(booksActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BooksContainer);

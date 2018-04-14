@@ -28,13 +28,13 @@ class LoginContainer extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(authenticateActions, dispatch)
-});
-
 const mapStateToProps = state => ({
   isLogined: state.authenticate.isLogined,
   message: state.authenticate.message
+});
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(authenticateActions, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

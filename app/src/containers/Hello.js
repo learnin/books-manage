@@ -1,25 +1,20 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as booksActions from '../redux/modules/books'
 
-const handleListBooks = (e, dispatch) => {
-  e.preventDefault();
-  dispatch(booksActions.listBooks());
-};
+const HelloContainer = ({ actions }) => (
+  <div>
+    <input type="button" value="listBooks" onClick={actions.listBooks} />
+    <input type="button" value="listMyBooks" onClick={actions.listMyBooks} />
+  </div>
+);
 
-const handleListMyBooks = (e, dispatch) => {
-  e.preventDefault();
-  dispatch(booksActions.listMyBooks());
-};
+const mapStateToProps = state => state;
 
-const HelloContainer = ({ dispatch }) => {
-  return (
-    <div>
-      <input type="button" value="listBooks" onClick={(e) => handleListBooks(e, dispatch)} />
-      <input type="button" value="listMyBooks" onClick={(e) => handleListMyBooks(e, dispatch)} />
-    </div>
-  );
-};
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(booksActions, dispatch)
+});
 
-export default connect()(HelloContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(HelloContainer);
