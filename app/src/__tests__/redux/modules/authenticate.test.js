@@ -1,8 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import * as actions from '../../actions';
-import * as actionTypes from '../../utils/actionTypes';
+import * as authenticateActions from '../../../redux/modules/authenticate';
 
 jest.mock('amazon-cognito-identity-js');
 
@@ -11,7 +10,7 @@ const cognitoIdentityServiceProvider = require('amazon-cognito-identity-js');
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const createMockStore = () => mockStore({
-  authenticator: {
+  authenticate: {
     accessToken: '',
     isFetching: false,
     isLogined: false,
@@ -24,12 +23,16 @@ describe('requestLogin', () => {
     const username = cognitoIdentityServiceProvider.__test__correctUserAccount.username;
     const password = cognitoIdentityServiceProvider.__test__correctUserAccount.password;
     const expectedActions = [{
-      type: actionTypes.FETCH_LOGIN_REQUEST,
-      username,
-      password
+      type: authenticateActions.LOGIN_REQUEST,
+      payload: {
+        username,
+        password
+      }
     }, {
-      type: actionTypes.FETCH_LOGIN_SUCCESS,
-      accessToken: cognitoIdentityServiceProvider.__test__correctUserAccount.accessToken
+      type: authenticateActions.LOGIN_SUCCESS,
+      payload: {
+        accessToken: cognitoIdentityServiceProvider.__test__correctUserAccount.accessToken
+      }
     }, {
       type: '@@router/CALL_HISTORY_METHOD',
       payload: {
@@ -39,7 +42,7 @@ describe('requestLogin', () => {
     }];
     const store = createMockStore();
 
-    store.dispatch(actions.fetchLoginIfNeeded(username, password));
+    store.dispatch(authenticateActions.fetchLoginIfNeeded(username, password));
     expect(store.getActions()).toEqual(expectedActions);
   });
 
@@ -47,16 +50,19 @@ describe('requestLogin', () => {
     const username = cognitoIdentityServiceProvider.__test__correctUserAccount.username;
     const password = 'wrong_password';
     const expectedActions = [{
-      type: actionTypes.FETCH_LOGIN_REQUEST,
-      username,
-      password
+      type: authenticateActions.LOGIN_REQUEST,
+      payload: {
+        username,
+        password
+      }
     }, {
-      type: actionTypes.FETCH_LOGIN_FAILURE,
-      error: cognitoIdentityServiceProvider.__test__errorOnAuthenticate
+      type: authenticateActions.LOGIN_FAILURE,
+      payload: cognitoIdentityServiceProvider.__test__errorOnAuthenticate,
+      error: true
     }];
     const store = createMockStore();
 
-    store.dispatch(actions.fetchLoginIfNeeded(username, password));
+    store.dispatch(authenticateActions.fetchLoginIfNeeded(username, password));
     expect(store.getActions()).toEqual(expectedActions);
   });
 });
