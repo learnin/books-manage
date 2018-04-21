@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 
 import * as authenticateActions from '../redux/modules/authenticate';
 
+import TextField from '../components/TextField';
+
 class LoginContainer extends React.Component {
   static propTypes = {
     actions: PropTypes.object.isRequired
@@ -17,10 +19,10 @@ class LoginContainer extends React.Component {
     return (
       <div>
         {message}<br/>
-        <input type="text" ref="username" name="username" /><br/>
+        <TextField id="username" name="username" />
         <input type="password" ref="password" name="password" /><br/>
         <button onClick={() => actions.fetchLoginIfNeeded(
-          ReactDOM.findDOMNode(this.refs.username).value.trim(),
+          document.getElementById('username').value.trim(),
           ReactDOM.findDOMNode(this.refs.password).value.trim()
         )}>ログイン</button>
       </div>
