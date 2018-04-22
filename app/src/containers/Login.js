@@ -27,10 +27,18 @@ class LoginContainer extends React.Component {
 
     return (
       <div>
-        {message}<br/>
-        <TextField name="username" inputRef={el => this.usernameEl = el} />
-        <input type="password" name="password" ref={el => this.passwordEl = el} /><br/>
-        <Button onClick={e => this.login(actions.fetchLoginIfNeeded)}>ログイン</Button>
+        <div>
+          {message}
+        </div>
+        <div>
+          <TextField name="username" inputRef={el => this.usernameEl = el} />
+        </div>
+        <div>
+          <input type="password" name="password" ref={el => this.passwordEl = el} />
+        </div>
+        <div>
+          <Button onClick={e => this.login(actions.fetchLoginIfNeeded)}>ログイン</Button>
+        </div>
       </div>
     );
   }
