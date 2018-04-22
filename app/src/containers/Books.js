@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as booksActions from '../redux/modules/books';
+import Button from '../components/Button';
 
 const BooksContainer = ({ actions, books }) => (
   <div>
@@ -14,7 +15,7 @@ const BooksContainer = ({ actions, books }) => (
         );
       })
     }
-    <input type="button" value="createBook" onClick={actions.createBook} />
+    <Button onClick={actions.createBook}>createBook</Button>
   </div>
 );
 

@@ -3,11 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as booksActions from '../redux/modules/books'
+import Button from '../components/Button';
 
 const HelloContainer = ({ actions }) => (
   <div>
-    <input type="button" value="listBooks" onClick={actions.listBooks} />
-    <input type="button" value="listMyBooks" onClick={actions.listMyBooks} />
+    <Button onClick={actions.listBooks}>listBooks</Button>
+    <Button onClick={actions.listMyBooks}>listMyBooks</Button>
   </div>
 );
 

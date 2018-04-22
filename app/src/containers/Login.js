@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import * as authenticateActions from '../redux/modules/authenticate';
 
 import TextField from '../components/TextField';
+import Button from '../components/Button';
 
 class LoginContainer extends React.Component {
   static propTypes = {
@@ -21,10 +22,10 @@ class LoginContainer extends React.Component {
         {message}<br/>
         <TextField id="username" name="username" />
         <input type="password" ref="password" name="password" /><br/>
-        <button onClick={() => actions.fetchLoginIfNeeded(
+        <Button onClick={() => actions.fetchLoginIfNeeded(
           document.getElementById('username').value.trim(),
           ReactDOM.findDOMNode(this.refs.password).value.trim()
-        )}>ログイン</button>
+        )}>ログイン</Button>
       </div>
     );
   }
