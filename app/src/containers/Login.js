@@ -13,8 +13,7 @@ class LoginContainer extends React.Component {
     super(props);
     this.usernameEl = null;
     this.passwordEl = null;
-    this.login = (e, loginFn) => {
-      e.preventDefault();
+    this.login = (loginFn) => {
       loginFn(this.usernameEl.value, this.passwordEl.value);
     };
   }
@@ -31,7 +30,7 @@ class LoginContainer extends React.Component {
         {message}<br/>
         <TextField name="username" inputRef={el => this.usernameEl = el} />
         <input type="password" name="password" ref={el => this.passwordEl = el} /><br/>
-        <Button onClick={e => this.login(e, actions.fetchLoginIfNeeded)}>ログイン</Button>
+        <Button onClick={e => this.login(actions.fetchLoginIfNeeded)}>ログイン</Button>
       </div>
     );
   }

@@ -9,6 +9,6 @@ const TextField = ({ inputRef }) => (
 
 TextField.propTypes = {
   inputRef: PropTypes.func
-}
+};
 
 export default TextField;
