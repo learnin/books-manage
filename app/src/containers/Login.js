@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -10,6 +9,16 @@ import TextField from '../components/TextField';
 import Button from '../components/Button';
 
 class LoginContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.usernameEl = null;
+    this.passwordEl = null;
+    this.login = (e, loginFn) => {
+      e.preventDefault();
+      loginFn(this.usernameEl.value, this.passwordEl.value);
+    };
+  }
+
   static propTypes = {
     actions: PropTypes.object.isRequired
   };
@@ -20,12 +29,9 @@ class LoginContainer extends React.Component {
     return (
       <div>
         {message}<br/>
-        <TextField id="username" name="username" />
-        <input type="password" ref="password" name="password" /><br/>
-        <Button onClick={() => actions.fetchLoginIfNeeded(
-          document.getElementById('username').value.trim(),
-          ReactDOM.findDOMNode(this.refs.password).value.trim()
-        )}>ログイン</Button>
+        <TextField name="username" inputRef={el => this.usernameEl = el} />
+        <input type="password" name="password" ref={el => this.passwordEl = el} /><br/>
+        <Button onClick={e => this.login(e, actions.fetchLoginIfNeeded)}>ログイン</Button>
       </div>
     );
   }

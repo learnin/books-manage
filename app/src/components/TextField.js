@@ -1,20 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class TextField extends React.Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired
-  };
+const TextField = ({ inputRef }) => (
+  <div>
+    <input type="text" ref={inputRef} />
+  </div>
+);
 
-  render() {
-    const { id, name } = this.props;
-
-    return (
-      <div>
-        <input type="text" id={id} name={name} />
-      </div>
-    );
-  }
+TextField.propTypes = {
+  inputRef: PropTypes.func
 }
 
 export default TextField;
