@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 import * as authenticateActions from '../redux/modules/authenticate';
 
-import TextField from '../components/TextField';
-import Button from '../components/Button';
+import TextField from '../components/atoms/TextField';
+import Button from '../components/atoms/Button';
 
 class LoginContainer extends React.Component {
   constructor(props) {

@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as booksActions from '../redux/modules/books'
-import Button from '../components/Button';
+import Button from '../components/atoms/Button';
 
 const HelloContainer = ({ actions }) => (
   <div>
