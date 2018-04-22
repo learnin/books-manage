@@ -2,8 +2,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as booksActions from '../redux/modules/books'
-import Button from '../components/atoms/Button';
+import * as booksActions from '../../redux/modules/books'
+import Button from '../../components/atoms/Button';
 
 const HelloContainer = ({ actions }) => (
   <div>

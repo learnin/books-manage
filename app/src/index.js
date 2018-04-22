@@ -6,9 +6,9 @@ import thunk from 'redux-thunk';
 import { Router, Route, browserHistory } from 'react-router';
 import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux';
 import './index.css';
-import Login from './containers/Login';
-import Hello from './containers/Hello';
-import Books from './containers/Books';
+import Login from './containers/pages/Login';
+import Hello from './containers/pages/Hello';
+import Books from './containers/pages/Books';
 import reducer from './redux/modules/reducer';
 import registerServiceWorker from './registerServiceWorker';
 

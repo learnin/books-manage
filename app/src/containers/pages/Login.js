@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as authenticateActions from '../redux/modules/authenticate';
+import * as authenticateActions from '../../redux/modules/authenticate';
 
-import TextField from '../components/atoms/TextField';
-import Button from '../components/atoms/Button';
+import TextField from '../../components/atoms/TextField';
+import Button from '../../components/atoms/Button';
 
 class LoginContainer extends React.Component {
   constructor(props) {
