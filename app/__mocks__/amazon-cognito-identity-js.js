@@ -1,6 +1,8 @@
 'use strict';
 
-const cognitoIdentityServiceProvider = jest.genMockFromModule('amazon-cognito-identity-js');
+const cognitoIdentityServiceProvider = jest.genMockFromModule(
+  'amazon-cognito-identity-js'
+);
 
 class AuthenticationDetails {
   constructor(authenticationData) {
@@ -10,8 +12,7 @@ class AuthenticationDetails {
 }
 
 class CognitoUserPool {
-  constructor(poolData) {
-  }
+  constructor(poolData) {}
 }
 
 const __test__correctUserAccount = {
@@ -19,7 +20,9 @@ const __test__correctUserAccount = {
   password: 'correct_password',
   accessToken: 'correct_accessToken'
 };
-const __test__errorOnAuthenticate = {message: 'username or password is wrong.'};
+const __test__errorOnAuthenticate = {
+  message: 'username or password is wrong.'
+};
 
 class CognitoUser {
   constructor(userData) {
@@ -41,9 +44,11 @@ class CognitoUser {
     };
   }
   static authenticate(authenticationDetails) {
-    return authenticationDetails
-      && authenticationDetails.username === __test__correctUserAccount.username
-      && authenticationDetails.password === __test__correctUserAccount.password;
+    return (
+      authenticationDetails &&
+      authenticationDetails.username === __test__correctUserAccount.username &&
+      authenticationDetails.password === __test__correctUserAccount.password
+    );
   }
 }
 

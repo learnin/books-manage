@@ -13,7 +13,7 @@ class LoginContainer extends React.Component {
     super(props);
     this.usernameEl = null;
     this.passwordEl = null;
-    this.login = (loginFn) => {
+    this.login = loginFn => {
       loginFn(this.usernameEl.value, this.passwordEl.value);
     };
   }
@@ -27,17 +27,21 @@ class LoginContainer extends React.Component {
 
     return (
       <div>
+        <div>{message}</div>
         <div>
-          {message}
+          <TextField name="username" inputRef={el => (this.usernameEl = el)} />
         </div>
         <div>
-          <TextField name="username" inputRef={el => this.usernameEl = el} />
+          <input
+            type="password"
+            name="password"
+            ref={el => (this.passwordEl = el)}
+          />
         </div>
         <div>
-          <input type="password" name="password" ref={el => this.passwordEl = el} />
-        </div>
-        <div>
-          <Button onClick={e => this.login(actions.fetchLoginIfNeeded)}>ログイン</Button>
+          <Button onClick={e => this.login(actions.fetchLoginIfNeeded)}>
+            ログイン
+          </Button>
         </div>
       </div>
     );
@@ -53,4 +57,7 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(authenticateActions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginContainer);

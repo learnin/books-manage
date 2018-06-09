@@ -72,19 +72,19 @@ function fetchLogin(username, password) {
     dispatch(fetchLoginRequest(username, password));
 
     apiClient.authenticateUser(username, password, {
-      onSuccess: function (result) {
+      onSuccess: function(result) {
         console.log('access token: ' + result.getIdToken().getJwtToken());
 
         dispatch(fetchLoginSuccess(result.getIdToken().getJwtToken()));
         dispatch(push('/hello'));
       },
 
-      onFailure: function (error) {
+      onFailure: function(error) {
         console.log(error);
         dispatch(fetchLoginFailure(error.message));
       },
 
-      newPasswordRequired: function (userAttributes, requiredAttributes) {
+      newPasswordRequired: function(userAttributes, requiredAttributes) {
         console.log('newPasswordRequired');
         // User was signed up by an admin and must provide new
         // password and required attributes, if any, to complete

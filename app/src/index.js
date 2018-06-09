@@ -12,7 +12,10 @@ import Books from './containers/pages/Books';
 import reducer from './redux/modules/reducer';
 import registerServiceWorker from './registerServiceWorker';
 
-const store = createStore(reducer, applyMiddleware(thunk, routerMiddleware(browserHistory)));
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk, routerMiddleware(browserHistory))
+);
 
 const history = syncHistoryWithStore(browserHistory, store);
 

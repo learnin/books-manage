@@ -27,4 +27,7 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(booksActions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BooksContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BooksContainer);

@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as booksActions from '../../redux/modules/books'
+import * as booksActions from '../../redux/modules/books';
 import Button from '../../components/atoms/Button';
 
 const HelloContainer = ({ actions }) => (
@@ -18,4 +18,7 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(booksActions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HelloContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HelloContainer);

@@ -60,15 +60,14 @@ function fetchBooksFailure(message) {
 
 export function createBook() {
   return (dispatch, getState) => {
-    apiClient.createBook(getState().authenticate.accessToken)
-      .then(res => {
-        const { payload, error } = res;
-        if (payload && !error) {
-          console.log(payload);
-        } else {
-          console.error(error);
-        }
-      });
+    apiClient.createBook(getState().authenticate.accessToken).then(res => {
+      const { payload, error } = res;
+      if (payload && !error) {
+        console.log(payload);
+      } else {
+        console.error(error);
+      }
+    });
   };
 }
 
@@ -76,25 +75,23 @@ export function listBooks() {
   return (dispatch, getState) => {
     dispatch(fetchBooksRequest());
 
-    apiClient.fetchBooks(getState().authenticate.accessToken)
-      .then(res => {
-        const { payload, error } = res;
-        if (payload && !error) {
-          console.log(payload);
-          dispatch(fetchBooksSuccess(payload));
-          dispatch(push('/books'));
-        } else {
-          console.error(error);
-          dispatch(fetchBooksFailure(error.message));
-        }
-      });
+    apiClient.fetchBooks(getState().authenticate.accessToken).then(res => {
+      const { payload, error } = res;
+      if (payload && !error) {
+        console.log(payload);
+        dispatch(fetchBooksSuccess(payload));
+        dispatch(push('/books'));
+      } else {
+        console.error(error);
+        dispatch(fetchBooksFailure(error.message));
+      }
+    });
   };
 }
 
 export function listMyBooks() {
   return (dispatch, getState) => {
-    apiClient.fetchMyBooks(getState().authenticate.accessToken)
-    .then(res => {
+    apiClient.fetchMyBooks(getState().authenticate.accessToken).then(res => {
       const { payload, error } = res;
       if (payload && !error) {
         console.log(payload);
